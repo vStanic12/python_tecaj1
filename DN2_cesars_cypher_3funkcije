@@ -1,0 +1,94 @@
+'''
+Naloga: 
+Ustvarite dve funkciji, ki bosta delovali kot "Cesar's cipher" - https://en.wikipedia.org/wiki/Caesar_cipher.
+Cesar's encryption si lahko predstavljamo tako, da položimo dve abecedi eno na drugo, kjer je ena zamaknjena za določeno število črk. V danem primeru imamo zamik v desno za 3 črke.
+ 
+Plain A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+Cipher X Y Z A B C D E F G H I J K L M N O P Q R S T U V W
+Ko besedilo kriptiramo pogledamo črko našega sporočila v "plain" delu naše tabele in vzamemo črko, ki se nahaja pod njo v "cipher" delu.
+ 
+PRIMER:
+Plaintext:  THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+Ciphertext: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
+Prva funkcija naj bo imenovana cesars_encryption. Ima dva parametra. Prvi parameter je besedilo katerega želimo ekriptirati. Drugi parameter je številka, ki nam pove za koliko zamaknemo drugo abecedo. Default vrednost naj bo 3. Funkcija naj vrne ekriptirano sporočilo.
+ 
+ 
+Druga funkcija naj bo imenovana cesars_decryption. Ima dva parametra. Prvi parameter je kriptirano sporočilo. Drugi parameter je številka, ki nam pove za koliko zamaknemo drugo abecedo. Default vrednost naj bo 3. Funkcija naj vrne dekriptirano sporočilo.
+'''
+ 
+ 
+lower="abcdefghijklmnopqrstuvwxyz"
+upper="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+cyphL=[]
+cyphU=[]
+decyphL=[]
+decyphU=[]
+ 
+zamik=int(input("Za koliko znakov zelis zamakniti abecedo: "))
+text=str(input("Vnesi besedilo: "))
+#newtext=""
+crypt=str(input("Vnesi kriptirano besedilo: "))
+#newcrypt=""
+ 
+ 
+#nakonc abc seznama za decypher dodej prvih (zamik) vrednosti nakonc
+def create_key(lower,upper,zamik):
+    for i in range(len(lower)):
+        cyphL.append(lower[i])
+    print(cyphL)
+ 
+    for i in range(len(upper)):
+        cyphU.append(upper[i])
+    print(cyphU)
+    
+    for i in range(len(lower)):
+        decyphL.append(lower[i])
+    #print(decyphL)
+    
+    for i in range(len(upper)):
+        decyphU.append(upper[i])
+    #print(decyphU)
+    
+    for i in range(zamik):
+        decyphL.append(lower[i])
+        decyphU.append(upper[i])
+    print(decyphL)
+    print(decyphU)
+    
+ 
+ 
+#find text[i] in orig and add orig[i-zamik] to new var
+ 
+def cypher(text,zamik):
+    newtext=""
+    for i, ch in enumerate(text):
+        if ch!=" ":
+            if ch in cyphL:
+                newtext=newtext+cyphL[cyphL.index(ch)-zamik]
+            if ch in cyphU:
+                newtext=newtext+cyphU[cyphU.index(ch)-zamik]
+        else:
+            newtext=newtext+ch
+    print(f'The message you want to encrypt is: {text}')
+    print(f'The message you have encrypted is: {newtext}')
+    return newtext
+    
+def decypher(crypt,zamik):
+    newcrypt=""
+    for i, ch in enumerate(crypt):
+        if ch!=" ":
+            if ch in decyphL:
+                newcrypt=newcrypt+decyphL[decyphL.index(ch)+zamik]
+            if ch in decyphU:
+                newcrypt=newcrypt+decyphU[decyphU.index(ch)+zamik]
+        else:
+            newcrypt=newcrypt+ch
+    print(f'The encrypted message is: {crypt}')
+    print(f'The deciphered message is: {newcrypt}')
+    return newcrypt
+    
+create_key(lower,upper,zamik)    
+cypher(text,zamik)
+decypher(crypt,zamik)
+ 
+#print(f'I have encrypted the message "{text}"" into "{cypher(text,3,newtext)}"" and deciphered the coded message "{crypt}"" into "{decypher(crypt,3,newcrypt)}"')
